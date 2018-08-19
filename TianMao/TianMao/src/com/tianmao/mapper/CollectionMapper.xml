@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.CollectionMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Collection">
+    <id column="collectionId" jdbcType="INTEGER" property="collectionid" />
+    <result column="CollectionER" jdbcType="VARCHAR" property="collectioner" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collectionId, CollectionER, type, value
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from collection
+    where collectionId = #{collectionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from collection
+    where collectionId = #{collectionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Collection">
+    insert into collection (collectionId, CollectionER, type, 
+      value)
+    values (#{collectionid,jdbcType=INTEGER}, #{collectioner,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Collection">
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collectionid != null">
+        collectionId,
+      </if>
+      <if test="collectioner != null">
+        CollectionER,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collectionid != null">
+        #{collectionid,jdbcType=INTEGER},
+      </if>
+      <if test="collectioner != null">
+        #{collectioner,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Collection">
+    update collection
+    <set>
+      <if test="collectioner != null">
+        CollectionER = #{collectioner,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collectionId = #{collectionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Collection">
+    update collection
+    set CollectionER = #{collectioner,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR}
+    where collectionId = #{collectionid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,96 @@
+a{
+	text-decoration: none !important;
+	cursor: pointer;
+}
+td,th{
+	display:table-cell !important;
+	text-align:center !important;/*设置水平方向居中*/ 
+	vertical-align:middle !important;/*设置垂直方向居中*/
+}
+tbody tr:hover{/*歌曲列表悬浮*/
+	cursor: pointer;
+	background-color: #269ABC;
+}
+td{/*取消歌曲列表边框*/
+	border: none !important;
+}
+.clearpm{/*清除内外边距*/
+	margin: 0px;
+	padding: 0px;
+}
+.hover:hover{/*鼠标悬浮样式*/
+	cursor: pointer;
+}
+.mh{/*歌曲歌词列表高度*/
+	overflow: auto;
+	/*max-height: 1000px;*/
+	height: 85%;
+}
+/*滚动条颜色设置(chrome浏览器)*/
+::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track-piece{
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:vertical{
+    height: 5px;
+    background-color: #999999;
+    -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:horizontal{
+    width: 5px;
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
+}
+/*滚动条颜色设置(chrome浏览器)*/
+/*滚动条颜色设置(IE)*/
+.nicescroll1{
+	overflow-y:auto;
+	overflow-x:hidden;
+	height:580px;
+	scrollbar-arrow-color:#302D30; /*三角箭头的颜色*/
+	scrollbar-face-color:#000; /*立体滚动条的颜色（包括箭头部分的背景色）*/
+	scrollbar-3dlight-color:#302D30; /*立体滚动条亮边的颜色*/
+	scrollbar-highlight-color:#302D30; /*滚动条的高亮颜色（左阴影？）*/
+	scrollbar-shadow-color:#302D30; /*立体滚动条阴影的颜色*/
+	scrollbar-darkshadow-color:#302D30; /*立体滚动条外阴影的颜色*/
+	scrollbar-track-color:#302D30; /*立体滚动条背景颜色*/
+	scrollbar-base-color:#302D30; /*滚动条的基色*/
+}
+/*滚动条颜色设置(IE)*/
+.dh{/*封面旋转动画*/
+	animation: xz 8s linear infinite;
+}
+@keyframes xz{
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
+/*歌曲进度条样式*/
+input[type="range"] {
+	/*display: inline-block;*/
+	-webkit-appearance: none;
+	background-color: #bdc3c7;
+	height: 10px;
+	border-radius: 5px;
+	margin: 0 auto;
+	outline: 0;
+	cursor: pointer;
+}
+::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background-color: #e74c3c;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid white;
+	cursor: pointer;
+	transition: 0.3s ease-in-out;
+}

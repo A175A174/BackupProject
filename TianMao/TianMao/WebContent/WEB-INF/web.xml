@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+
+	<display-name>TianMao</display-name>
+
+	<!-- spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring-bean.xml</param-value>
+	</context-param>
+	<!-- spring -->
+
+	<!-- springMVC -->
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-bean.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+            <!--临时文件的目录-->
+            <location>d:/</location>
+            <!-- 上传文件最大2M -->
+            <max-file-size>2097152</max-file-size>
+            <!-- 上传文件整个请求不超过4M -->
+            <max-request-size>4194304</max-request-size>
+        </multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- springMVC -->
+	
+	<!-- Restful风格 -->
+	<!-- <filter>
+       <filter-name>HiddenHttpMethodFilter</filter-name>
+       <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+       <filter-name>HiddenHttpMethodFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+    </filter-mapping> -->
+    <!-- Restful风格 -->
+
+	<!-- spring提供的编码设置 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- spring提供的编码设置 -->
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/index</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/index</location>
+	</error-page>
+
+</web-app>

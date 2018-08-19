@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.OrderexpressMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Orderexpress">
+    <id column="expressId" jdbcType="INTEGER" property="expressid" />
+    <result column="orderCode" jdbcType="VARCHAR" property="ordercode" />
+    <result column="shipmentsName" jdbcType="VARCHAR" property="shipmentsname" />
+    <result column="shipmentsCode" jdbcType="VARCHAR" property="shipmentscode" />
+    <result column="returnName" jdbcType="VARCHAR" property="returnname" />
+    <result column="returnCode" jdbcType="VARCHAR" property="returncode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    expressId, orderCode, shipmentsName, shipmentsCode, returnName, returnCode
+  </sql>
+  <!-- **************************************************** -->
+  <select id="selectByorderCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderexpress
+    where orderCode = #{ordercode,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByorderCodeSelective" parameterType="com.tianmao.pojo.Orderexpress">
+    update orderexpress
+    <set>
+      <if test="shipmentsname != null">
+        shipmentsName = #{shipmentsname,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmentscode != null">
+        shipmentsCode = #{shipmentscode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnname != null">
+        returnName = #{returnname,jdbcType=VARCHAR},
+      </if>
+      <if test="returncode != null">
+        returnCode = #{returncode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderCode = #{ordercode,jdbcType=VARCHAR}
+  </update>
+  <!-- **************************************************** -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderexpress
+    where expressId = #{expressid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderexpress
+    where expressId = #{expressid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Orderexpress">
+    insert into orderexpress (expressId, orderCode, shipmentsName, 
+      shipmentsCode, returnName, returnCode
+      )
+    values (#{expressid,jdbcType=INTEGER}, #{ordercode,jdbcType=VARCHAR}, #{shipmentsname,jdbcType=VARCHAR}, 
+      #{shipmentscode,jdbcType=VARCHAR}, #{returnname,jdbcType=VARCHAR}, #{returncode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Orderexpress">
+    insert into orderexpress
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="expressid != null">
+        expressId,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="shipmentsname != null">
+        shipmentsName,
+      </if>
+      <if test="shipmentscode != null">
+        shipmentsCode,
+      </if>
+      <if test="returnname != null">
+        returnName,
+      </if>
+      <if test="returncode != null">
+        returnCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="expressid != null">
+        #{expressid,jdbcType=INTEGER},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmentsname != null">
+        #{shipmentsname,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmentscode != null">
+        #{shipmentscode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnname != null">
+        #{returnname,jdbcType=VARCHAR},
+      </if>
+      <if test="returncode != null">
+        #{returncode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Orderexpress">
+    update orderexpress
+    <set>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmentsname != null">
+        shipmentsName = #{shipmentsname,jdbcType=VARCHAR},
+      </if>
+      <if test="shipmentscode != null">
+        shipmentsCode = #{shipmentscode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnname != null">
+        returnName = #{returnname,jdbcType=VARCHAR},
+      </if>
+      <if test="returncode != null">
+        returnCode = #{returncode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where expressId = #{expressid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Orderexpress">
+    update orderexpress
+    set orderCode = #{ordercode,jdbcType=VARCHAR},
+      shipmentsName = #{shipmentsname,jdbcType=VARCHAR},
+      shipmentsCode = #{shipmentscode,jdbcType=VARCHAR},
+      returnName = #{returnname,jdbcType=VARCHAR},
+      returnCode = #{returncode,jdbcType=VARCHAR}
+    where expressId = #{expressid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.User">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userCode" jdbcType="VARCHAR" property="usercode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="payPass" jdbcType="INTEGER" property="paypass" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="isDel" jdbcType="VARCHAR" property="isdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userCode, name, password, payPass, balance, isDel
+  </sql>
+  <!-- *********************************************** -->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where name = #{name,jdbcType=VARCHAR} And isDel = '0'
+  </select>
+  <select id="selectByuserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    userId, userCode, name, payPass, balance
+    from user
+    where userCode = #{userCode,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByuserCodeSelective" parameterType="com.tianmao.pojo.User">
+    update user
+    <set>
+      <if test="usercode != null">
+        userCode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="paypass != null">
+        payPass = #{paypass,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        isDel = #{isdel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userCode = #{usercode,jdbcType=VARCHAR}
+  </update>
+  <!-- *********************************************** -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.User">
+    insert into user (userId, userCode, name, 
+      password, payPass, balance, 
+      isDel)
+    values (#{userid,jdbcType=INTEGER}, #{usercode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{paypass,jdbcType=INTEGER}, #{balance,jdbcType=DECIMAL}, 
+      #{isdel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="usercode != null">
+        userCode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="paypass != null">
+        payPass,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="isdel != null">
+        isDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="paypass != null">
+        #{paypass,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.User">
+    update user
+    <set>
+      <if test="usercode != null">
+        userCode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="paypass != null">
+        payPass = #{paypass,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        isDel = #{isdel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.User">
+    update user
+    set userCode = #{usercode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      payPass = #{paypass,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=DECIMAL},
+      isDel = #{isdel,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

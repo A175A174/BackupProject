@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- <context:annotation-config /> -->
+	<!-- IOC注解 -->
+	<context:component-scan base-package="com.tianmao.service" />
+	
+	<!-- 配置连接数据库的驱动，URL，账号和密码 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1:3306/tianmao?characterEncoding=UTF-8</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>root</value>
+		</property>
+	</bean>
+	
+	<!-- #############Spring声明式事务管理############### -->
+	<!-- 1 配置事务管理器类 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 2 配置事务增强(如何管理事务) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 3 Aop配置： 拦截哪些方法(切入点表表达式) + 应用上面的事务增强配置 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.tianmao.service..*.*(..))" id="pt"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt"/>
+	</aop:config>
+	
+	<!-- 扫描XML配置文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- configLocation：指定Mybatis配置文件位置。后续属性指定的内容会覆盖该配置的对应内容。 -->
+		<!-- 指定数据源JDBC -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 完全限定名修改为类名 -->
+		<!-- <property name="typeAliasesPackage" value="com.tianmao.pojo" /> -->
+		<!-- MapperXML文件位置，跟对应的Mapper接口处于同一位置时可以不用指定该属性的值 -->
+		<!-- <property name="mapperLocations" value="classpath:com/tianmao/mapper/*.xml" /> -->
+	</bean>
+	
+	<!-- 扫描Mapper接口类,将接口转换为容器中的Bean，在Service中用@Autowired直接注入接口实例 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tianmao.mapper" />
+	</bean>
+	
+	<!-- redis组件 -->
+    <import resource="spring-redis.xml"/>
+
+</beans>
