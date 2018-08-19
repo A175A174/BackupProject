@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="assets/js/bootstrap.min.js" ></script>
+		<link rel="stylesheet" href="css/unlock.css" />
+		<script type="text/javascript" src="js/unlock.js" ></script>
+		<script type="text/javascript" src="js/validator.min.js" ></script>
+	</head>
+	<body>
+		<!--<div id = "foo" ></div>-->
+		<form class="form-signin" data-toggle="validator">
+        	<div class="form-group">
+				<div class="input-group input-group-lg">
+			  		<span class="input-group-addon">账号</span>
+					<input data-minlength="5" type="text" id="rusername" class="form-control" placeholder="enter account" aria-describedby="basic-username" required>
+					<span class="help-block input-group-addon with-errors"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group input-group-lg">
+			  		<span class="input-group-addon">密码</span>
+					<input type="password" id="rpassword" class="form-control" placeholder="enter password" aria-describedby="basic-password" required>
+					<span class="help-block with-errors"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group input-group-lg">
+			  		<span class="input-group-addon">确认密码</span>
+			  		<input data-feedback data-match="#rpassword" type="password" id="rpasswordr" class="form-control" placeholder="enter password" aria-describedby="basic-password" required>
+					<span class="help-block with-errors"></span>
+				</div>
+			</div>
+		</form>
+	</body>
+<script>
+	$(function(){
+		var container = $('#foo');
+		container.slideToUnlock({
+			successFunc : function() {},//成功解锁后的回调函数
+			height : 50,//滑块的高度
+			width : 200,//滑块的宽度
+			textColor : '#fff',//文字的颜色
+			text : '请滑动来验证',//未解锁的文字
+			succText : '验证成功',//解锁成功后的文字
+			succTextColor : '#fff',//解锁成功后显示的文字颜色
+			succColor : '#f60',//解锁成功后的颜色
+			
+			bgColor : '#aaa',//滑块的背景颜色
+			handleColor : '#fff',//滑块手柄的颜色
+			progressColor : '#bca'//progress的颜色
+			
+		});
+	});
+</script>
+</html>
