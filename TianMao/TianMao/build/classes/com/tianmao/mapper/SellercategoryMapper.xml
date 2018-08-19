@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.SellercategoryMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Sellercategory">
+    <id column="sellerCategoryId" jdbcType="INTEGER" property="sellercategoryid" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="isDel" jdbcType="VARCHAR" property="isdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sellerCategoryId, seller, name, isDel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sellercategory
+    where sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sellercategory
+    where sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Sellercategory">
+    insert into sellercategory (sellerCategoryId, seller, name, 
+      isDel)
+    values (#{sellercategoryid,jdbcType=INTEGER}, #{seller,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{isdel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Sellercategory">
+    insert into sellercategory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sellercategoryid != null">
+        sellerCategoryId,
+      </if>
+      <if test="seller != null">
+        seller,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="isdel != null">
+        isDel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sellercategoryid != null">
+        #{sellercategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="seller != null">
+        #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Sellercategory">
+    update sellercategory
+    <set>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isDel = #{isdel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Sellercategory">
+    update sellercategory
+    set seller = #{seller,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      isDel = #{isdel,jdbcType=VARCHAR}
+    where sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER}
+  </update>
+</mapper>

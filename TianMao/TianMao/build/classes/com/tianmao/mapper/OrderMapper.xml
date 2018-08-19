@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Order">
+    <id column="orderId" jdbcType="INTEGER" property="orderid" />
+    <result column="orderCode" jdbcType="VARCHAR" property="ordercode" />
+    <result column="sellerId" jdbcType="VARCHAR" property="sellerid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="userRemark" jdbcType="VARCHAR" property="userremark" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="payDate" jdbcType="TIMESTAMP" property="paydate" />
+    <result column="confirmDate" jdbcType="TIMESTAMP" property="confirmdate" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradeprice" />
+    <result column="isDel" jdbcType="VARCHAR" property="isdel" />
+    <result column="addressId" jdbcType="INTEGER" property="addressid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderId, orderCode, sellerId, userId, userRemark, createDate, payDate, confirmDate, 
+    status, tradePrice, isDel, addressId
+  </sql>
+  <!-- ************************************************************ -->
+  <select id="selectByorderCode" parameterType="com.tianmao.mapper.OrderMapper" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tianmao.order
+    where orderCode = #{ordercode} And isDel != '2'
+  </select>
+  <select id="selectByorderCodeAndstatus" parameterType="com.tianmao.mapper.OrderMapper" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tianmao.order
+    where orderCode = #{ordercode} And status = #{status} And isDel != '2' order by orderId desc
+  </select>
+  <select id="selectBysellerIdAndstatus" parameterType="com.tianmao.mapper.OrderMapper" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tianmao.order
+    where sellerId = #{sellerid} And status = #{status} And isDel != '2' order by orderId desc
+  </select>
+  <select id="selectByuserIdAndstatus" parameterType="com.tianmao.mapper.OrderMapper" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tianmao.order
+    where userId = #{userid} And status = #{status} And isDel != '2' order by orderId desc
+  </select>
+  <update id="updateByorderCodeSelective" parameterType="com.tianmao.pojo.Order">
+    update tianmao.order
+    <set>
+      <if test="sellerid != null">
+        sellerId = #{sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="userremark != null">
+        userRemark = #{userremark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydate != null">
+        payDate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmdate != null">
+        confirmDate = #{confirmdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeprice != null">
+        tradePrice = #{tradeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        isDel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        addressId = #{addressid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderCode = #{ordercode,jdbcType=VARCHAR}
+  </update>
+  <!-- ************************************************************ -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Order">
+    insert into order (orderId, orderCode, sellerId, 
+      userId, userRemark, createDate, 
+      payDate, confirmDate, status, 
+      tradePrice, isDel, addressId
+      )
+    values (#{orderid,jdbcType=INTEGER}, #{ordercode,jdbcType=VARCHAR}, #{sellerid,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=VARCHAR}, #{userremark,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{paydate,jdbcType=TIMESTAMP}, #{confirmdate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{tradeprice,jdbcType=DECIMAL}, #{isdel,jdbcType=VARCHAR}, #{addressid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Order" useGeneratedKeys="true" keyProperty="orderid">
+    insert into tianmao.order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="sellerid != null">
+        sellerId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="userremark != null">
+        userRemark,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="paydate != null">
+        payDate,
+      </if>
+      <if test="confirmdate != null">
+        confirmDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="tradeprice != null">
+        tradePrice,
+      </if>
+      <if test="isdel != null">
+        isDel,
+      </if>
+      <if test="addressid != null">
+        addressId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerid != null">
+        #{sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="userremark != null">
+        #{userremark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydate != null">
+        #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmdate != null">
+        #{confirmdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeprice != null">
+        #{tradeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        #{addressid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Order">
+    update order
+    <set>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerid != null">
+        sellerId = #{sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="userremark != null">
+        userRemark = #{userremark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paydate != null">
+        payDate = #{paydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmdate != null">
+        confirmDate = #{confirmdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeprice != null">
+        tradePrice = #{tradeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="isdel != null">
+        isDel = #{isdel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null">
+        addressId = #{addressid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Order">
+    update order
+    set orderCode = #{ordercode,jdbcType=VARCHAR},
+      sellerId = #{sellerid,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      userRemark = #{userremark,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      payDate = #{paydate,jdbcType=TIMESTAMP},
+      confirmDate = #{confirmdate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      tradePrice = #{tradeprice,jdbcType=DECIMAL},
+      isDel = #{isdel,jdbcType=VARCHAR},
+      addressId = #{addressid,jdbcType=INTEGER}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

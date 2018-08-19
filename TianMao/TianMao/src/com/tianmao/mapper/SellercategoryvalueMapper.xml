@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.SellercategoryvalueMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Sellercategoryvalue">
+    <id column="sellerCategoryValueId" jdbcType="INTEGER" property="sellercategoryvalueid" />
+    <result column="sellerCategoryId" jdbcType="INTEGER" property="sellercategoryid" />
+    <result column="product" jdbcType="INTEGER" property="product" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sellerCategoryValueId, sellerCategoryId, product
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sellercategoryvalue
+    where sellerCategoryValueId = #{sellercategoryvalueid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sellercategoryvalue
+    where sellerCategoryValueId = #{sellercategoryvalueid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Sellercategoryvalue">
+    insert into sellercategoryvalue (sellerCategoryValueId, sellerCategoryId, 
+      product)
+    values (#{sellercategoryvalueid,jdbcType=INTEGER}, #{sellercategoryid,jdbcType=INTEGER}, 
+      #{product,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Sellercategoryvalue">
+    insert into sellercategoryvalue
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sellercategoryvalueid != null">
+        sellerCategoryValueId,
+      </if>
+      <if test="sellercategoryid != null">
+        sellerCategoryId,
+      </if>
+      <if test="product != null">
+        product,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sellercategoryvalueid != null">
+        #{sellercategoryvalueid,jdbcType=INTEGER},
+      </if>
+      <if test="sellercategoryid != null">
+        #{sellercategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="product != null">
+        #{product,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Sellercategoryvalue">
+    update sellercategoryvalue
+    <set>
+      <if test="sellercategoryid != null">
+        sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="product != null">
+        product = #{product,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sellerCategoryValueId = #{sellercategoryvalueid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Sellercategoryvalue">
+    update sellercategoryvalue
+    set sellerCategoryId = #{sellercategoryid,jdbcType=INTEGER},
+      product = #{product,jdbcType=INTEGER}
+    where sellerCategoryValueId = #{sellercategoryvalueid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianmao.mapper.OrderitemMapper">
+  <resultMap id="BaseResultMap" type="com.tianmao.pojo.Orderitem">
+    <id column="orderItemId" jdbcType="INTEGER" property="orderitemid" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="productId" jdbcType="INTEGER" property="productid" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderItemId, orderId, productId, number
+  </sql>
+  <!-- ******************************************** -->
+  <select id="selectByproductIdNum" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    sum(number) AS number
+    from orderitem
+    where productId = #{productId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByorderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderitem
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <!-- ******************************************** -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orderitem
+    where orderItemId = #{orderitemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from orderitem
+    where orderItemId = #{orderitemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tianmao.pojo.Orderitem">
+    insert into orderitem (orderItemId, orderId, productId, 
+      number)
+    values (#{orderitemid,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{productid,jdbcType=INTEGER}, 
+      #{number,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tianmao.pojo.Orderitem">
+    insert into orderitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderitemid != null">
+        orderItemId,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="productid != null">
+        productId,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderitemid != null">
+        #{orderitemid,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tianmao.pojo.Orderitem">
+    update orderitem
+    <set>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        productId = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderItemId = #{orderitemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tianmao.pojo.Orderitem">
+    update orderitem
+    set orderId = #{orderid,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER}
+    where orderItemId = #{orderitemid,jdbcType=INTEGER}
+  </update>
+</mapper>
